@@ -50,16 +50,16 @@ The platform is built with scalability, performance, and security in mind, makin
 ---
 
 ## 📂 Project Structure
-
+```
 SalesBuddy/
 │
-├── client/ # Frontend (React)
+├── Frontend
 │ ├── src/
 │ ├── components/
 │ ├── pages/
 │ └── services/
 │
-├── server/ # Backend (Node.js + Express)
+├── Backend
 │ ├── controllers/
 │ ├── routes/
 │ ├── models/
@@ -70,7 +70,7 @@ SalesBuddy/
 ├── package.json
 └── README.md
 
-
+```
 ---
 
 ## ⚙️ Installation & Setup
