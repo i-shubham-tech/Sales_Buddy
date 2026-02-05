@@ -1,0 +1,60 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    pull_policy: never
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: sales_password
+      MYSQL_DATABASE: sales_buddy
+    ports:
+      - "3307:3306"   # host:container
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psales_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  sales_buddy-backend:
+    build: ./salebuddy_backend   # ✅ local image
+    container_name: sales_buddy-backend
+    restart: on-failure
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306        # ⚠️ container port, NOT 3307
+      DB_USER: root
+      DB_PASSWORD: sales_password
+      DB_NAME: salebuddy
+    networks:
+      - app-network
+
+  sales_buddy-frontend:
+    image: sales_buddy-frontend:latest  # ✅ local image
+    pull_policy: never
+    container_name: sales_buddy-frontend
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    depends_on:
+      - sales_buddy-backend
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge

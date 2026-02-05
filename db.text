@@ -1,0 +1,116 @@
+----------services table---------------
+
+CREATE TABLE services (
+    serviceid INT PRIMARY KEY AUTO_INCREMENT,
+    servicetype VARCHAR(100),
+    servicename VARCHAR(100),
+    icon VARCHAR(255),
+    servicestatus VARCHAR(50)
+);
+
+----------brands table---------------
+
+CREATE TABLE brands (
+    brandid INT PRIMARY KEY AUTO_INCREMENT,
+    serviceid INT,
+    brandname VARCHAR(100),
+    brandlogo VARCHAR(255),
+    FOREIGN KEY (serviceid) REFERENCES services(serviceid)
+);
+
+-----------products table-----------------
+
+CREATE TABLE products (
+    productid INT PRIMARY KEY AUTO_INCREMENT,
+    serviceid INT,
+    brandid INT,
+    productname VARCHAR(150),
+    productdescription TEXT,
+    productpicture VARCHAR(255),
+    FOREIGN KEY (serviceid) REFERENCES services(serviceid),
+    FOREIGN KEY (brandid) REFERENCES brands(brandid)
+);
+
+
+-----------productcolors table---------------
+
+CREATE TABLE productColors (
+    productcolorid INT PRIMARY KEY AUTO_INCREMENT,
+    serviceid INT,
+    brandid INT,
+    productid INT,
+    productcolor VARCHAR(50),
+    FOREIGN KEY (serviceid) REFERENCES services(serviceid),
+    FOREIGN KEY (brandid) REFERENCES brands(brandid),
+    FOREIGN KEY (productid) REFERENCES products(productid)
+);
+
+
+--------------productvarients table-----------------
+
+CREATE TABLE productVarients (
+    productvarientid INT PRIMARY KEY AUTO_INCREMENT,
+    serviceid INT,
+    brandid INT,
+    productid INT,
+    productram VARCHAR(50),
+    productstorage VARCHAR(50),
+    FOREIGN KEY (serviceid) REFERENCES services(serviceid),
+    FOREIGN KEY (brandid) REFERENCES brands(brandid),
+    FOREIGN KEY (productid) REFERENCES products(productid)
+);
+
+
+------------productdetails table----------------------
+
+CREATE TABLE productdetails (
+    productdetailid INT PRIMARY KEY AUTO_INCREMENT,
+    serviceid INT,
+    brandid INT,
+    productid INT,
+    productcolorid INT,
+    productvarientid INT,
+    imei VARCHAR(50),
+    productstatus VARCHAR(50),
+    warranty VARCHAR(100),
+    ratings DECIMAL(2,1),
+    price DECIMAL(10,2),
+    offerprice DECIMAL(10,2),
+    membershipprice DECIMAL(10,2),
+    `condition` VARCHAR(50),
+    description TEXT,
+    stock INT,
+    picture VARCHAR(255),
+    video VARCHAR(255),
+    FOREIGN KEY (serviceid) REFERENCES services(serviceid),
+    FOREIGN KEY (brandid) REFERENCES brands(brandid),
+    FOREIGN KEY (productid) REFERENCES products(productid),
+    FOREIGN KEY (productcolorid) REFERENCES productColors(productcolorid),
+    FOREIGN KEY (productvarientid) REFERENCES productVarients(productvarientid)
+);
+
+-----------------More Picture-----------------------
+
+CREATE TABLE morepicture (
+    pictureid INT PRIMARY KEY AUTO_INCREMENT,
+    serviceid INT,
+    brandid INT,
+    productid INT,
+    productdetailid INT,
+    picture VARCHAR(255),
+    FOREIGN KEY (serviceid) REFERENCES services(serviceid),
+    FOREIGN KEY (brandid) REFERENCES brands(brandid),
+    FOREIGN KEY (productid) REFERENCES products(productid),
+    FOREIGN KEY (productdetailid) REFERENCES productdetails(productdetailid)
+);
+
+---------------Admin Table--------------------------
+CREATE TABLE admin (
+    adminid INT PRIMARY KEY AUTO_INCREMENT,
+    emailid VARCHAR(100) UNIQUE,
+    mobileno VARCHAR(15) UNIQUE,
+    name VARCHAR(100),
+    password VARCHAR(255),
+    picture VARCHAR(255)
+);
+
