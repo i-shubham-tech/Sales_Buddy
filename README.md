@@ -77,7 +77,7 @@ SalesBuddy/
 
 ### Prerequisites
 - Node.js
-- MongoDB
+- SQL
 - Git
 
 ### Clone the Repository
