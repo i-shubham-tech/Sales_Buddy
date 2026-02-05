@@ -82,7 +82,7 @@ SalesBuddy/
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/your-username/salesbuddy.git
+git clone https://github.com/i-shubham-tech/salesbuddy.git
 cd salesbuddy
 Backend Setup
 cd server
